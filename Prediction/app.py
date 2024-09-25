@@ -133,6 +133,8 @@ def prediction_dashboard():
 
 def visualization_dashboard():
     st.title("COPD Data Exploration")
+   # Univariate Analysis
+    plt.figure(figsize=(14, 8))
 
     # Sidebar filter options
     st.sidebar.header("Filter Data")
@@ -162,34 +164,30 @@ def visualization_dashboard():
             (df['BMI'] >= bmi_range[0]) & (df['BMI'] <= bmi_range[1]) &
             (df['Location'].isin(location_filter))
         ]
-
+  
         st.subheader("Filtered Data Overview")
         st.dataframe(filtered_df)  # Display the filtered data
 
         # Univariate Analysis for Filtered Data
         st.subheader("Age Distribution (Filtered Data)")
-        plt.figure(figsize=(14, 8))
         sns.histplot(filtered_df['Age'], kde=True, color='blue')
         plt.title('Age Distribution (Filtered Data)')
         st.pyplot(plt)
         plt.clf()
 
         st.subheader("BMI Distribution (Filtered Data)")
-        plt.figure(figsize=(14, 8))
         sns.histplot(filtered_df['BMI'], kde=True, color='green')
         plt.title('BMI Distribution (Filtered Data)')
         st.pyplot(plt)
         plt.clf()
 
         st.subheader("Gender Distribution (Filtered Data)")
-        plt.figure(figsize=(14, 8))
         sns.countplot(x='Gender', data=filtered_df, palette='viridis')
         plt.title('Gender Distribution (Filtered Data)')
         st.pyplot(plt)
         plt.clf()
 
         st.subheader("Smoking Status Distribution (Filtered Data)")
-        plt.figure(figsize=(14, 8))
         sns.countplot(x='Smoking_Status', data=filtered_df, palette='Set1')
         plt.title('Smoking Status Distribution (Filtered Data)')
         st.pyplot(plt)
@@ -197,28 +195,24 @@ def visualization_dashboard():
 
         # Bivariate Analysis for Filtered Data
         st.subheader("Age vs COPD Diagnosis (Filtered Data)")
-        plt.figure(figsize=(14, 8))
         sns.boxplot(x='COPD_Diagnosis', y='Age', data=filtered_df, palette='coolwarm')
         plt.title('Age vs COPD Diagnosis (Filtered Data)')
         st.pyplot(plt)
         plt.clf()
 
         st.subheader("BMI vs COPD Diagnosis (Filtered Data)")
-        plt.figure(figsize=(14, 8))
         sns.boxplot(x='COPD_Diagnosis', y='BMI', data=filtered_df, palette='coolwarm')
         plt.title('BMI vs COPD Diagnosis (Filtered Data)')
         st.pyplot(plt)
         plt.clf()
 
         st.subheader("Smoking Status vs COPD Diagnosis (Filtered Data)")
-        plt.figure(figsize=(14, 8))
         sns.boxplot(x='Smoking_Status', hue='COPD_Diagnosis', data=filtered_df, palette='Set2')
         plt.title('Smoking Status vs COPD Diagnosis (Filtered Data)')
         st.pyplot(plt)
         plt.clf()
 
         st.subheader("Gender vs COPD Diagnosis Count (Filtered Data)")
-        plt.figure(figsize=(14, 8))
         sns.countplot(x='Gender', hue='COPD_Diagnosis', data=filtered_df, palette='Set2')
         plt.title("Gender vs COPD Diagnosis Count (Filtered Data)")
         st.pyplot(plt)
@@ -227,9 +221,68 @@ def visualization_dashboard():
         st.subheader("Correlation Matrix (Filtered Data)")
         data_corr_filtered = filtered_df[['Age', 'Biomass_Fuel_Exposure', 'Occupational_Exposure', 'Family_History_COPD', 'BMI', 'Air_Pollution_Level', 'Respiratory_Infections_Childhood', 'COPD_Diagnosis']]
         corr_filtered = data_corr_filtered.corr()
-        plt.figure(figsize=(14, 8))
         sns.heatmap(corr_filtered, annot=True, cmap='coolwarm', fmt='.2f')
         plt.title('Correlation Matrix (Filtered Data)')
+        st.pyplot(plt)
+        plt.clf()
+       
+    else:
+        # Age Distribution
+        st.subheader("Age Distribution")
+        sns.histplot(df['Age'], kde=True, color='Red')
+        plt.title('Age Distribution')
+        st.pyplot(plt)
+        plt.clf()
+
+        # BMI Distribution
+        st.subheader("BMI Distribution")
+        sns.histplot(df['BMI'],kde=True,color='green')
+        plt.title('BMI Distribution')
+        st.pyplot(plt)
+        plt.clf()
+
+        st.subheader("Gender Distribution")
+        sns.countplot(x='Gender', data=df, palette='viridis')
+        plt.title('Gender Distribution')
+        st.pyplot(plt)
+        plt.clf()
+
+        st.subheader("Smoking Status Distribution")
+        sns.countplot(x='Smoking_Status', data=df, palette='Set1')
+        plt.title('Smoking Status Distribution')
+        st.pyplot(plt)
+        plt.clf()
+
+        # Bivariate Analysis for Filtered Data
+        st.subheader("Age vs COPD Diagnosis")
+        sns.boxplot(x='COPD_Diagnosis', y='Age', data=df, palette='coolwarm')
+        plt.title('Age vs COPD Diagnosis ')
+        st.pyplot(plt)
+        plt.clf()
+
+        st.subheader("BMI vs COPD Diagnosis")
+        sns.boxplot(x='COPD_Diagnosis', y='BMI', data=df, palette='coolwarm')
+        plt.title('BMI vs COPD Diagnosis ')
+        st.pyplot(plt)
+        plt.clf()
+
+        st.subheader("Smoking Status vs COPD Diagnosis")
+        sns.boxplot(x='Smoking_Status', hue='COPD_Diagnosis', data=df, palette='Set2')
+        plt.title('Smoking Status vs COPD Diagnosis')
+        st.pyplot(plt)
+        plt.clf()
+
+        st.subheader("Gender vs COPD Diagnosis Count")
+        sns.countplot(x='Gender', hue='COPD_Diagnosis', data=df, palette='Set2')
+        plt.title("Gender vs COPD Diagnosis Count ")
+        st.pyplot(plt)
+        plt.clf()
+
+        st.subheader("Correlation Matrix ")
+        data_corr_filtered = df[['Age', 'Biomass_Fuel_Exposure', 'Occupational_Exposure', 'Family_History_COPD', 'BMI', 'Air_Pollution_Level', 'Respiratory_Infections_Childhood', 'COPD_Diagnosis']]
+        corr_filtered = data_corr_filtered.corr()
+        sns.heatmap(corr_filtered, annot=True, cmap='coolwarm', fmt='.2f')
+        plt.title('Correlation Matrix ')
         st.pyplot(plt)
         plt.clf()
 
